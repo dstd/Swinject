@@ -306,6 +306,10 @@ extension Container: Resolver {
             return persistedInstance
         }
 
+        if entry.objectScope !== ObjectScope.transient {
+            Container.log("#swinject \(String(repeating: "   ", count: resolutionDepth)) \(entry.serviceType)")
+        }
+
         let resolvedInstance = invoker(entry.factory as! Factory)
         if let persistedInstance = persistedInstance(Service.self, from: entry, in: currentObjectGraph) {
             // An instance for the key might be added by the factory invocation.
